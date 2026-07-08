@@ -77,7 +77,7 @@ task-manager-api/
 Clone o repositório:
 
 ```bash
-git clone https://github.com/williamdev95/task-manager-api.git
+git clone https://github.com/williamcipriano-dev/task-manager-api.git
 ```
 
 Acesse a pasta:
