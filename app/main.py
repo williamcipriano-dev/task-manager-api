@@ -1,6 +1,7 @@
-from fastapi import FastAPI
+from fastapi import Depends, FastAPI
+from sqlalchemy.orm import Session
 
-from app.database.database import Base, engine
+from app.database.database import Base, engine, get_db
 from app.database.models import Task
 
 Base.metadata.create_all(bind=engine)
@@ -15,3 +16,9 @@ app = FastAPI(
 @app.get("/")
 def home():
     return {"message": "Task Manager API funcionando!"}
+
+
+@app.get("/database")
+def test_database(db: Session = Depends(get_db)):
+    return {"message": "Conexão com o banco funcionando!"}
+    
