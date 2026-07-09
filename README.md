@@ -61,6 +61,8 @@ task-manager-api/
 - Modelo `Task`
 - Criação automática do banco de dados
 - Documentação automática com Swagger
+- Schemas com Pydantic (`TaskCreate` e `TaskResponse`)
+- Criação de tarefas (`POST /tasks`)
 
 ### 🚧 Em desenvolvimento
 
