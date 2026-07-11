@@ -1,4 +1,4 @@
-from fastapi import Depends, FastAPI
+from fastapi import Depends, FastAPI, HTTPException
 from sqlalchemy.orm import Session
 
 from app.database.database import Base, engine, get_db
@@ -36,3 +36,22 @@ def create_task(task: TaskCreate, db: Session = Depends(get_db)):
     db.refresh(new_task)
 
     return new_task
+
+
+@app.get("/tasks", response_model=list[TaskResponse])
+def list_tasks(db: Session = Depends(get_db)):
+    tasks = db.query(Task).all()
+
+    return tasks
+
+@app.get("/tasks/{task_id}", response_model=TaskResponse)
+def get_task(task_id: int, db: Session = Depends(get_db)):
+    task = db.query(Task).filter(Task.id == task_id).first()
+
+    if task is None:
+        raise HTTPException(
+            status_code=404,
+            detail="Tarefa não encontrada."
+        )
+
+    return task
