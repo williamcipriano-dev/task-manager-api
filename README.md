@@ -63,6 +63,7 @@ task-manager-api/
 - Documentação automática com Swagger
 - Schemas com Pydantic (`TaskCreate` e `TaskResponse`)
 - Criação de tarefas (`POST /tasks`)
+- Busca de tarefas por ID (`GET /tasks/{task_id}`)
 
 ### 🚧 Em desenvolvimento
 
