@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 
 from app.database.database import Base, engine, get_db
 from app.database.models import Task
-from app.schemas import TaskCreate, TaskResponse
+from app.schemas import TaskCreate, TaskUpdate, TaskResponse
 
 Base.metadata.create_all(bind=engine)
 
@@ -44,6 +44,7 @@ def list_tasks(db: Session = Depends(get_db)):
 
     return tasks
 
+
 @app.get("/tasks/{task_id}", response_model=TaskResponse)
 def get_task(task_id: int, db: Session = Depends(get_db)):
     task = db.query(Task).filter(Task.id == task_id).first()
@@ -55,3 +56,43 @@ def get_task(task_id: int, db: Session = Depends(get_db)):
         )
 
     return task
+
+
+@app.put("/tasks/{task_id}", response_model=TaskResponse)
+def update_task(
+    task_id: int,
+    task_update: TaskUpdate,
+    db: Session = Depends(get_db)
+):
+    task = db.query(Task).filter(Task.id == task_id).first()
+
+    if task is None:
+        raise HTTPException(
+            status_code=404,
+            detail="Tarefa não encontrada."
+        )
+
+    task.title = task_update.title
+    task.description = task_update.description
+    task.completed = task_update.completed
+
+    db.commit()
+    db.refresh(task)
+
+    return task
+
+
+@app.delete("/tasks/{task_id}")
+def delete_task(task_id: int, db: Session = Depends(get_db)):
+    task = db.query(Task).filter(Task.id == task_id).first()
+
+    if task is None:
+        raise HTTPException(
+            status_code=404,
+            detail="Tarefa não encontrada."
+        )
+
+    db.delete(task)
+    db.commit()
+
+    return {"message": "Tarefa removida com sucesso."}    
