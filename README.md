@@ -1,37 +1,25 @@
 # Task Manager API
 
-API REST para gerenciamento de tarefas desenvolvida com **FastAPI**, com foco em boas práticas de desenvolvimento, organização de código e arquitetura para aplicações backend.
+API REST para gerenciamento de tarefas desenvolvida com **FastAPI**, seguindo boas práticas de organização de código, arquitetura em camadas e desenvolvimento de APIs REST.
 
-> 🚧 **Status:** Em desenvolvimento.
-
----
-
-## Objetivo
-
-Desenvolver uma API REST completa utilizando Python, implementando:
-
-- CRUD de tarefas
-- Banco de dados SQLite
-- SQLAlchemy (ORM)
-- Autenticação JWT
-- Documentação automática com Swagger
-- Front-end simples consumindo a API
+Este projeto está sendo desenvolvido para estudo, portfólio e prática de desenvolvimento backend com Python.
 
 ---
 
-## Tecnologias
+## 🚀 Tecnologias utilizadas
 
 - Python 3
 - FastAPI
 - SQLAlchemy
 - SQLite
+- Pydantic
 - Uvicorn
 
 ---
 
-## Estrutura do projeto
+## 📂 Estrutura do projeto
 
-```text
+```
 task-manager-api/
 │
 ├── app/
@@ -40,9 +28,14 @@ task-manager-api/
 │   │   ├── database.py
 │   │   └── models.py
 │   │
+│   ├── schemas/
+│   │   ├── __init__.py
+│   │   └── task.py
+│   │
 │   ├── __init__.py
 │   └── main.py
 │
+├── tasks.db
 ├── README.md
 ├── requirements.txt
 └── .gitignore
@@ -50,97 +43,62 @@ task-manager-api/
 
 ---
 
-## Funcionalidades
-
-### ✅ Concluído
+## ✅ Funcionalidades implementadas
 
 - Estrutura inicial do projeto
 - Configuração do FastAPI
 - Banco de dados SQLite
 - Integração com SQLAlchemy
-- Modelo `Task`
+- Modelagem da entidade `Task`
 - Criação automática do banco de dados
 - Documentação automática com Swagger
-- Schemas com Pydantic (`TaskCreate` e `TaskResponse`)
-- Criação de tarefas (`POST /tasks`)
-- Busca de tarefas por ID (`GET /tasks/{task_id}`)
-
-### 🚧 Em desenvolvimento
-
-- CRUD de tarefas
-- Autenticação JWT
-- Front-end para consumo da API
-- Testes finais
-- Integração ao Portfólio
+- Schemas com Pydantic (`TaskCreate`, `TaskUpdate` e `TaskResponse`)
+- Criar tarefa (`POST /tasks`)
+- Listar tarefas (`GET /tasks`)
+- Buscar tarefa por ID (`GET /tasks/{task_id}`)
+- Atualizar tarefa (`PUT /tasks/{task_id}`)
+- Excluir tarefa (`DELETE /tasks/{task_id}`)
 
 ---
 
-## Como executar
+## 📖 Documentação
 
-Clone o repositório:
-
-```bash
-git clone https://github.com/williamcipriano-dev/task-manager-api.git
-```
-
-Acesse a pasta:
-
-```bash
-cd task-manager-api
-```
-
-Crie o ambiente virtual:
-
-```bash
-python -m venv venv
-```
-
-Ative o ambiente virtual.
-
-Windows:
-
-```powershell
-.\venv\Scripts\activate
-```
-
-Instale as dependências:
-
-```bash
-pip install -r requirements.txt
-```
-
-Execute a aplicação:
+Após iniciar o servidor:
 
 ```bash
 uvicorn app.main:app --reload
 ```
 
----
-
-## Documentação
-
-Swagger:
+A documentação interativa estará disponível em:
 
 ```
 http://127.0.0.1:8000/docs
 ```
 
-ReDoc:
+---
 
-```
-http://127.0.0.1:8000/redoc
-```
+## 🚧 Status do projeto
+
+### ✅ Concluído
+
+- Estrutura do projeto
+- Banco de dados SQLite
+- Modelagem com SQLAlchemy
+- CRUD completo
+- Documentação automática com Swagger
+
+### 🔄 Próximas etapas
+
+- Autenticação com JWT
+- Sistema de login
+- Proteção de rotas
+- Front-end para consumir a API
 
 ---
 
-## Versionamento
+## 👨‍💻 Autor
 
-Este projeto está sendo desenvolvido utilizando **Git** e **GitHub**, com commits organizados seguindo o padrão **Conventional Commits**.
+**William Cipriano**
 
----
-
-## Autor
-
-William Cipriano
-
-Projeto desenvolvido para estudos, prática de desenvolvimento backend e composição de portfólio.
+GitHub:
+https://github.com/williamcipriano-dev
