@@ -2,7 +2,7 @@ from fastapi import Depends, FastAPI, HTTPException
 from sqlalchemy.orm import Session
 
 from app.database.database import Base, engine, get_db
-from app.database.models import Task
+from app.database.models import Task, User
 from app.schemas import TaskCreate, TaskUpdate, TaskResponse
 
 Base.metadata.create_all(bind=engine)
