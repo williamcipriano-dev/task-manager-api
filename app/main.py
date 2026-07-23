@@ -4,6 +4,7 @@ from sqlalchemy.orm import Session
 from app.database.database import Base, engine, get_db
 from app.database.models import Task, User
 from app.schemas import TaskCreate, TaskUpdate, TaskResponse
+from app.auth.auth import router as auth_router
 
 Base.metadata.create_all(bind=engine)
 
@@ -12,6 +13,7 @@ app = FastAPI(
     description="API REST para gerenciamento de tarefas.",
     version="1.0.0"
 )
+app.include_router(auth_router)
 
 
 @app.get("/")
