@@ -5,6 +5,8 @@ from app.database.database import Base, engine, get_db
 from app.database.models import Task, User
 from app.schemas import TaskCreate, TaskUpdate, TaskResponse
 from app.auth.auth import router as auth_router
+from app.auth.security import get_current_user
+from app.routers.tasks import router as task_router
 
 Base.metadata.create_all(bind=engine)
 
@@ -13,7 +15,9 @@ app = FastAPI(
     description="API REST para gerenciamento de tarefas.",
     version="1.0.0"
 )
+
 app.include_router(auth_router)
+app.include_router(task_router)
 
 
 @app.get("/")
@@ -26,75 +30,3 @@ def test_database(db: Session = Depends(get_db)):
     return {"message": "Conexão com o banco funcionando!"}
 
 
-@app.post("/tasks", response_model=TaskResponse)
-def create_task(task: TaskCreate, db: Session = Depends(get_db)):
-    new_task = Task(
-        title=task.title,
-        description=task.description
-    )
-
-    db.add(new_task)
-    db.commit()
-    db.refresh(new_task)
-
-    return new_task
-
-
-@app.get("/tasks", response_model=list[TaskResponse])
-def list_tasks(db: Session = Depends(get_db)):
-    tasks = db.query(Task).all()
-
-    return tasks
-
-
-@app.get("/tasks/{task_id}", response_model=TaskResponse)
-def get_task(task_id: int, db: Session = Depends(get_db)):
-    task = db.query(Task).filter(Task.id == task_id).first()
-
-    if task is None:
-        raise HTTPException(
-            status_code=404,
-            detail="Tarefa não encontrada."
-        )
-
-    return task
-
-
-@app.put("/tasks/{task_id}", response_model=TaskResponse)
-def update_task(
-    task_id: int,
-    task_update: TaskUpdate,
-    db: Session = Depends(get_db)
-):
-    task = db.query(Task).filter(Task.id == task_id).first()
-
-    if task is None:
-        raise HTTPException(
-            status_code=404,
-            detail="Tarefa não encontrada."
-        )
-
-    task.title = task_update.title
-    task.description = task_update.description
-    task.completed = task_update.completed
-
-    db.commit()
-    db.refresh(task)
-
-    return task
-
-
-@app.delete("/tasks/{task_id}")
-def delete_task(task_id: int, db: Session = Depends(get_db)):
-    task = db.query(Task).filter(Task.id == task_id).first()
-
-    if task is None:
-        raise HTTPException(
-            status_code=404,
-            detail="Tarefa não encontrada."
-        )
-
-    db.delete(task)
-    db.commit()
-
-    return {"message": "Tarefa removida com sucesso."}    

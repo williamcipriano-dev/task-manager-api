@@ -1,6 +1,8 @@
 from passlib.context import CryptContext
 from datetime import datetime, timedelta
-from jose import jwt
+from fastapi import Depends, HTTPException
+from fastapi.security import OAuth2PasswordBearer
+from jose import JWTError, jwt
 
 
 SECRET_KEY = "sua-chave-secreta-aqui"
@@ -8,6 +10,10 @@ SECRET_KEY = "sua-chave-secreta-aqui"
 ALGORITHM = "HS256"
 
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
+
+oauth2_scheme = OAuth2PasswordBearer(
+    tokenUrl="/auth/login"
+)
 
 pwd_context = CryptContext(
     schemes=["bcrypt"],
@@ -44,4 +50,28 @@ def create_access_token(data: dict):
         algorithm=ALGORITHM
     )
 
-    return encoded_jwt    
+    return encoded_jwt 
+
+
+def get_current_user(token: str = Depends(oauth2_scheme)):
+    credentials_exception = HTTPException(
+        status_code=401,
+        detail="Não foi possível validar as credenciais.",
+    )
+
+    try:
+        payload = jwt.decode(
+            token,
+            SECRET_KEY,
+            algorithms=[ALGORITHM]
+        )
+
+        username = payload.get("sub")
+
+        if username is None:
+            raise credentials_exception
+
+        return username
+
+    except JWTError:
+        raise credentials_exception       
