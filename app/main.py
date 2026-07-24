@@ -7,6 +7,7 @@ from app.schemas import TaskCreate, TaskUpdate, TaskResponse
 from app.auth.auth import router as auth_router
 from app.auth.security import get_current_user
 from app.routers.tasks import router as task_router
+from fastapi.middleware.cors import CORSMiddleware
 
 Base.metadata.create_all(bind=engine)
 
@@ -14,6 +15,17 @@ app = FastAPI(
     title="Task Manager API",
     description="API REST para gerenciamento de tarefas.",
     version="1.0.0"
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://127.0.0.1:5500",
+        "http://localhost:5500"
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 app.include_router(auth_router)

@@ -1,0 +1,462 @@
+:root {
+    --bg: #0f172a;
+    --surface: #1e293b;
+    --surface-light: #334155;
+
+    --text: #e5e7eb;
+    --text-muted: #94a3b8;
+
+    --primary: #38bdf8;
+    --primary-hover: #0ea5e9;
+
+    --danger: #ef4444;
+    --success: #22c55e;
+
+    --border: #334155;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+}
+
+button,
+input {
+    font: inherit;
+}
+
+/* =========================
+   PÁGINA
+========================= */
+
+.app-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+}
+
+/* =========================
+   LOGIN
+========================= */
+
+.login-card {
+    width: 100%;
+    max-width: 430px;
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+    border-radius: 14px;
+
+    padding: 38px;
+
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.18);
+}
+
+/* Cabeçalho do login */
+
+.login-header {
+    margin-bottom: 32px;
+}
+
+.app-badge {
+    display: inline-block;
+
+    margin-bottom: 16px;
+
+    color: var(--primary);
+
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.login-header h1 {
+    margin-bottom: 10px;
+
+    font-size: 30px;
+    line-height: 1.2;
+}
+
+.login-header p {
+    color: var(--text-muted);
+
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+/* =========================
+   FORMULÁRIO
+========================= */
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.form-group input {
+    width: 100%;
+
+    padding: 13px 14px;
+
+    color: var(--text);
+    background: var(--bg);
+
+    border: 1px solid var(--border);
+    border-radius: 8px;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.form-group input::placeholder {
+    color: #64748b;
+}
+
+.form-group input:focus {
+    border-color: var(--primary);
+
+    box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.12);
+}
+
+/* =========================
+   BOTÃO PRINCIPAL
+========================= */
+
+.primary-button {
+    width: 100%;
+
+    margin-top: 4px;
+    padding: 13px;
+
+    color: #082f49;
+    background: var(--primary);
+
+    border: none;
+    border-radius: 8px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.1s ease;
+}
+
+.primary-button:hover {
+    background: var(--primary-hover);
+}
+
+.primary-button:active {
+    transform: translateY(1px);
+}
+
+/* =========================
+   MENSAGENS
+========================= */
+
+.form-message {
+    min-height: 20px;
+
+    margin-top: 14px;
+
+    color: var(--danger);
+
+    font-size: 14px;
+    text-align: center;
+}
+
+/* =========================
+   CADASTRO
+========================= */
+
+.register-area {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+
+    margin-top: 20px;
+    padding-top: 20px;
+
+    border-top: 1px solid var(--border);
+
+    color: var(--text-muted);
+
+    font-size: 14px;
+}
+
+#register-button {
+    padding: 0;
+
+    color: var(--primary);
+    background: transparent;
+
+    border: none;
+
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+#register-button:hover {
+    text-decoration: underline;
+}
+
+/* =========================
+   DASHBOARD
+========================= */
+
+.dashboard {
+    width: 100%;
+    max-width: 1000px;
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+    border-radius: 14px;
+
+    padding: 36px;
+
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.18);
+}
+
+/* Cabeçalho do dashboard */
+
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    gap: 24px;
+
+    padding-bottom: 28px;
+
+    border-bottom: 1px solid var(--border);
+}
+
+.dashboard-header h1 {
+    margin-top: 12px;
+    margin-bottom: 6px;
+
+    font-size: 30px;
+    line-height: 1.2;
+}
+
+.dashboard-header p {
+    color: var(--text-muted);
+
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+/* Usuário */
+
+.user-area {
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+}
+
+#current-user {
+    color: var(--text-muted);
+
+    font-size: 14px;
+}
+
+#logout-button {
+    padding: 9px 16px;
+
+    color: var(--primary);
+    background: transparent;
+
+    border: 1px solid var(--border);
+    border-radius: 8px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        border-color 0.2s ease,
+        background 0.2s ease;
+}
+
+#logout-button:hover {
+    border-color: var(--primary);
+    background: rgba(56, 189, 248, 0.06);
+}
+
+/* =========================
+   AÇÕES DO DASHBOARD
+========================= */
+
+.dashboard-actions {
+    display: flex;
+    justify-content: flex-end;
+
+    margin: 28px 0;
+}
+
+.dashboard-actions .primary-button {
+    width: auto;
+
+    margin: 0;
+    padding: 12px 22px;
+}
+
+/* =========================
+   ÁREA DAS TAREFAS
+========================= */
+
+.tasks-container {
+    min-height: 280px;
+
+    padding: 28px;
+
+    background: var(--bg);
+
+    border: 1px solid var(--border);
+    border-radius: 10px;
+}
+
+/* Estado sem tarefas */
+
+.empty-state {
+    min-height: 220px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+}
+
+.empty-state h2 {
+    margin-bottom: 10px;
+
+    font-size: 20px;
+}
+
+.empty-state p {
+    max-width: 430px;
+
+    color: var(--text-muted);
+
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+/* =========================
+   RODAPÉ
+========================= */
+
+.app-footer {
+    margin-top: 28px;
+    padding-top: 22px;
+
+    border-top: 1px solid var(--border);
+
+    color: var(--text-muted);
+
+    font-size: 13px;
+    line-height: 1.7;
+    text-align: center;
+}
+
+.app-footer p {
+    margin: 0;
+}
+
+/* =========================
+   RESPONSIVIDADE
+========================= */
+
+@media (max-width: 500px) {
+
+    .app-container {
+        padding: 16px;
+    }
+
+    /* Login */
+
+    .login-card {
+        padding: 28px 22px;
+    }
+
+    .login-header h1 {
+        font-size: 26px;
+    }
+
+    .register-area {
+        flex-direction: column;
+    }
+
+    /* Dashboard */
+
+    .dashboard {
+        padding: 24px 18px;
+    }
+
+    .dashboard-header {
+        flex-direction: column;
+    }
+
+    .dashboard-header h1 {
+        font-size: 26px;
+    }
+
+    .user-area {
+        width: 100%;
+
+        justify-content: space-between;
+    }
+
+    .dashboard-actions {
+        justify-content: stretch;
+    }
+
+    .dashboard-actions .primary-button {
+        width: 100%;
+    }
+
+    .tasks-container {
+        padding: 20px 16px;
+    }
+
+    .app-footer {
+        font-size: 12px;
+    }
+}
+
+/* =========================
+   UTILITÁRIOS
+========================= */
+
+.hidden {
+    display: none !important;
+}

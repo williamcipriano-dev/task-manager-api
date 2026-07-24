@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Task Manager</title>
+
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <main class="app-container">
+      <!-- TELA DE LOGIN -->
+      <section class="login-card">
+        <div class="login-header">
+          <span class="app-badge">TASK MANAGER</span>
+
+          <h1>Organize seu dia.</h1>
+
+          <p>Entre na sua conta para acessar e gerenciar suas tarefas.</p>
+        </div>
+
+        <form id="login-form">
+          <div class="form-group">
+            <label for="username">Usuário</label>
+
+            <input
+              type="text"
+              id="username"
+              name="username"
+              placeholder="Digite seu usuário"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="password">Senha</label>
+
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Digite sua senha"
+              required
+            />
+          </div>
+
+          <button type="submit" class="primary-button">Entrar</button>
+
+          <p id="login-message" class="form-message"></p>
+        </form>
+
+        <div class="register-area">
+          <span>Ainda não possui uma conta?</span>
+
+          <button type="button" id="register-button">Criar conta</button>
+        </div>
+      </section>
+
+      <!-- DASHBOARD -->
+      <section id="dashboard" class="dashboard hidden">
+        <header class="dashboard-header">
+          <div>
+            <span class="app-badge">TASK MANAGER</span>
+
+            <h1>Minhas tarefas</h1>
+
+            <p>Organize e acompanhe suas atividades.</p>
+          </div>
+
+          <div class="user-area">
+            <span id="current-user">William</span>
+
+            <button type="button" id="logout-button">Sair</button>
+          </div>
+        </header>
+
+        <div class="dashboard-actions">
+          <button type="button" id="new-task-button" class="primary-button">
+            + Nova tarefa
+          </button>
+        </div>
+
+        <section class="tasks-container">
+          <div class="empty-state">
+            <h2>Nenhuma tarefa por aqui.</h2>
+
+            <p>
+              Crie sua primeira tarefa para começar a organizar suas atividades.
+            </p>
+          </div>
+        </section>
+
+        <footer class="app-footer">
+          <p>© 2026 Task Manager</p>
+
+          <span> Desenvolvido por William Cipriano </span>
+        </footer>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
