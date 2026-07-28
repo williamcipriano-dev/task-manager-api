@@ -329,6 +329,135 @@ input {
 }
 
 /* =========================
+   FORMULÁRIO DE NOVA TAREFA
+========================= */
+
+.task-form-container {
+    margin-bottom: 28px;
+    padding: 28px;
+
+    background: var(--bg);
+
+    border: 1px solid var(--border);
+    border-radius: 10px;
+}
+
+.task-form-header {
+    margin-bottom: 26px;
+}
+
+.task-form-header .app-badge {
+    margin-bottom: 10px;
+}
+
+.task-form-header h2 {
+    margin-bottom: 8px;
+
+    font-size: 22px;
+}
+
+.task-form-header p {
+    color: var(--text-muted);
+
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+/* Descrição */
+
+.form-group textarea {
+    width: 100%;
+
+    padding: 13px 14px;
+
+    color: var(--text);
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+    border-radius: 8px;
+
+    outline: none;
+
+    font: inherit;
+    line-height: 1.5;
+
+    resize: vertical;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.form-group textarea::placeholder {
+    color: #64748b;
+}
+
+.form-group textarea:focus {
+    border-color: var(--primary);
+
+    box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.12);
+}
+
+/* Datas */
+
+.task-date-grid {
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 18px;
+}
+
+/* Inputs dentro do formulário de tarefa */
+
+.task-form-container .form-group input {
+    background: var(--surface);
+}
+
+/* Botões */
+
+.task-form-actions {
+    display: flex;
+    justify-content: flex-end;
+
+    gap: 12px;
+
+    margin-top: 6px;
+}
+
+.task-form-actions .primary-button {
+    width: auto;
+
+    margin: 0;
+    padding: 11px 20px;
+}
+
+.secondary-button {
+    padding: 11px 20px;
+
+    color: var(--text-muted);
+    background: transparent;
+
+    border: 1px solid var(--border);
+    border-radius: 8px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        color 0.2s ease,
+        border-color 0.2s ease,
+        background 0.2s ease;
+}
+
+.secondary-button:hover {
+    color: var(--text);
+    border-color: var(--text-muted);
+    background: rgba(148, 163, 184, 0.06);
+}
+
+/* =========================
    ÁREA DAS TAREFAS
 ========================= */
 
@@ -441,6 +570,26 @@ input {
     }
 
     .dashboard-actions .primary-button {
+        width: 100%;
+    }
+
+        /* Formulário de tarefa */
+
+    .task-form-container {
+        padding: 20px 16px;
+    }
+
+    .task-date-grid {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .task-form-actions {
+        flex-direction: column-reverse;
+    }
+
+    .task-form-actions .primary-button,
+    .secondary-button {
         width: 100%;
     }
 

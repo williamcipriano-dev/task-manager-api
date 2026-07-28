@@ -1,4 +1,4 @@
-from sqlalchemy import Boolean, Column, Integer, String
+from sqlalchemy import Boolean, Column, Date, Integer, String
 
 from app.database.database import Base
 
@@ -10,6 +10,16 @@ class Task(Base):
     title = Column(String, nullable=False)
     description = Column(String, nullable=True)
     completed = Column(Boolean, default=False)
+
+    start_date = Column(
+        Date,
+        nullable=True
+    )
+
+    due_date = Column(
+        Date,
+        nullable=True
+    )
 
 
 class User(Base):
@@ -34,4 +44,4 @@ class User(Base):
     hashed_password = Column(
         String,
         nullable=False
-    )    
+    )

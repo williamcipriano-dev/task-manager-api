@@ -17,7 +17,9 @@ def create_task(
 ):
     new_task = Task(
         title=task.title,
-        description=task.description
+        description=task.description,
+        start_date=task.start_date,
+        due_date=task.due_date
     )
 
     db.add(new_task)
@@ -72,6 +74,8 @@ def update_task(
     task.title = task_update.title
     task.description = task_update.description
     task.completed = task_update.completed
+    task.start_date = task_update.start_date
+    task.due_date = task_update.due_date
 
     db.commit()
     db.refresh(task)

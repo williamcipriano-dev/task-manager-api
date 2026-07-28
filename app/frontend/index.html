@@ -76,12 +76,85 @@
           </div>
         </header>
 
+        <!-- AÇÕES -->
         <div class="dashboard-actions">
           <button type="button" id="new-task-button" class="primary-button">
             + Nova tarefa
           </button>
         </div>
 
+        <!-- FORMULÁRIO DE NOVA TAREFA -->
+        <section id="task-form-container" class="task-form-container hidden">
+          <div class="task-form-header">
+            <div>
+              <span class="app-badge">NOVA TAREFA</span>
+
+              <h2>Criar tarefa</h2>
+
+              <p>Adicione as informações da atividade que deseja organizar.</p>
+            </div>
+          </div>
+
+          <form id="task-form">
+            <!-- TÍTULO -->
+            <div class="form-group">
+              <label for="task-title">Título</label>
+
+              <input
+                type="text"
+                id="task-title"
+                name="title"
+                placeholder="Ex: Finalizar documentação"
+                required
+              />
+            </div>
+
+            <!-- DESCRIÇÃO -->
+            <div class="form-group">
+              <label for="task-description">Descrição</label>
+
+              <textarea
+                id="task-description"
+                name="description"
+                placeholder="Descreva brevemente a tarefa"
+                rows="4"
+              ></textarea>
+            </div>
+
+            <!-- DATAS -->
+            <div class="task-date-grid">
+              <div class="form-group">
+                <label for="task-start-date"> Data de início </label>
+
+                <input type="date" id="task-start-date" name="start_date" />
+              </div>
+
+              <div class="form-group">
+                <label for="task-due-date"> Data limite </label>
+
+                <input type="date" id="task-due-date" name="due_date" />
+              </div>
+            </div>
+
+            <!-- MENSAGEM -->
+            <p id="task-message" class="form-message"></p>
+
+            <!-- BOTÕES -->
+            <div class="task-form-actions">
+              <button
+                type="button"
+                id="cancel-task-button"
+                class="secondary-button"
+              >
+                Cancelar
+              </button>
+
+              <button type="submit" class="primary-button">Criar tarefa</button>
+            </div>
+          </form>
+        </section>
+
+        <!-- LISTA DE TAREFAS -->
         <section class="tasks-container">
           <div class="empty-state">
             <h2>Nenhuma tarefa por aqui.</h2>
@@ -92,10 +165,11 @@
           </div>
         </section>
 
+        <!-- RODAPÉ -->
         <footer class="app-footer">
           <p>© 2026 Task Manager</p>
 
-          <span> Desenvolvido por William Cipriano </span>
+          <span>Desenvolvido por William Cipriano</span>
         </footer>
       </section>
     </main>

@@ -10,7 +10,17 @@ const dashboard = document.getElementById("dashboard");
 const logoutButton = document.getElementById("logout-button");
 const currentUser = document.getElementById("current-user");
 
+// Elementos do formulário de tarefas
+const newTaskButton = document.getElementById("new-task-button");
+const taskFormContainer = document.getElementById("task-form-container");
+const taskForm = document.getElementById("task-form");
+const cancelTaskButton = document.getElementById("cancel-task-button");
+const taskMessage = document.getElementById("task-message");
+
+// =========================
 // LOGIN
+// =========================
+
 loginForm.addEventListener("submit", async (event) => {
   event.preventDefault();
 
@@ -65,11 +75,56 @@ loginForm.addEventListener("submit", async (event) => {
   }
 });
 
+// =========================
+// NOVA TAREFA
+// =========================
+
+newTaskButton.addEventListener("click", () => {
+  // Mostra o formulário
+  taskFormContainer.classList.remove("hidden");
+
+  // Esconde o botão enquanto o formulário estiver aberto
+  newTaskButton.classList.add("hidden");
+
+  // Limpa mensagens anteriores
+  taskMessage.textContent = "";
+
+  // Coloca o cursor automaticamente no título
+  document.getElementById("task-title").focus();
+});
+
+// =========================
+// CANCELAR NOVA TAREFA
+// =========================
+
+cancelTaskButton.addEventListener("click", () => {
+  // Limpa os campos
+  taskForm.reset();
+
+  // Limpa mensagens
+  taskMessage.textContent = "";
+
+  // Esconde o formulário
+  taskFormContainer.classList.add("hidden");
+
+  // Mostra novamente o botão
+  newTaskButton.classList.remove("hidden");
+});
+
+// =========================
 // LOGOUT
+// =========================
+
 logoutButton.addEventListener("click", () => {
   // Remove os dados de autenticação
   localStorage.removeItem("access_token");
   localStorage.removeItem("username");
+
+  // Limpa e fecha o formulário de tarefas
+  taskForm.reset();
+  taskMessage.textContent = "";
+  taskFormContainer.classList.add("hidden");
+  newTaskButton.classList.remove("hidden");
 
   // Esconde o dashboard
   dashboard.classList.add("hidden");
