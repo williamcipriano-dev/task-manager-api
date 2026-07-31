@@ -16,6 +16,41 @@ const taskFormContainer = document.getElementById("task-form-container");
 const taskForm = document.getElementById("task-form");
 const cancelTaskButton = document.getElementById("cancel-task-button");
 const taskMessage = document.getElementById("task-message");
+// Elementos da lista de tarefas
+const tasksList = document.getElementById("tasks-list");
+const emptyState = document.getElementById("empty-state");
+
+// =========================
+// CONTROLE DA INTERFACE
+// =========================
+
+function showLogin() {
+  dashboard.classList.add("hidden");
+  loginCard.classList.remove("hidden");
+}
+
+function showDashboard() {
+  loginCard.classList.add("hidden");
+  dashboard.classList.remove("hidden");
+}
+
+function checkAuthentication() {
+  const token = localStorage.getItem("access_token");
+  const username = localStorage.getItem("username");
+
+  if (!token) {
+    showLogin();
+    return;
+  }
+
+  currentUser.textContent = username;
+  showDashboard();
+
+  loadTasks();
+}
+
+// Verifica a autenticação ao carregar a página
+checkAuthentication();
 
 // =========================
 // LOGIN
@@ -37,11 +72,9 @@ loginForm.addEventListener("submit", async (event) => {
   try {
     const response = await fetch(`${API_URL}/auth/login`, {
       method: "POST",
-
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
       },
-
       body: formData,
     });
 
@@ -51,7 +84,6 @@ loginForm.addEventListener("submit", async (event) => {
       loginMessage.style.color = "var(--danger)";
       loginMessage.textContent =
         data.detail || "Não foi possível realizar o login.";
-
       return;
     }
 
@@ -62,11 +94,10 @@ loginForm.addEventListener("submit", async (event) => {
     // Mostra o usuário no dashboard
     currentUser.textContent = username;
 
-    // Esconde o login
-    loginCard.classList.add("hidden");
-
     // Mostra o dashboard
-    dashboard.classList.remove("hidden");
+    showDashboard();
+    // Carrega as tarefas
+    await loadTasks();
   } catch (error) {
     loginMessage.style.color = "var(--danger)";
     loginMessage.textContent = "Não foi possível conectar ao servidor.";
@@ -112,6 +143,74 @@ cancelTaskButton.addEventListener("click", () => {
 });
 
 // =========================
+// CRIAR NOVA TAREFA
+// =========================
+
+taskForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+
+  const token = localStorage.getItem("access_token");
+
+  const taskData = {
+    title: document.getElementById("task-title").value,
+    description: document.getElementById("task-description").value,
+    start_date: document.getElementById("task-start-date").value || null,
+    due_date: document.getElementById("task-due-date").value || null,
+  };
+
+  try {
+    const response = await fetch(`${API_URL}/tasks`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(taskData),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      taskMessage.style.color = "var(--danger)";
+      taskMessage.textContent = data.detail || "Erro ao criar tarefa.";
+      return;
+    }
+
+    taskMessage.style.color = "var(--success)";
+    taskMessage.textContent = "Tarefa criada com sucesso!";
+  } catch (error) {
+    taskMessage.style.color = "var(--danger)";
+    taskMessage.textContent = "Não foi possível conectar ao servidor.";
+
+    console.error(error);
+  }
+});
+
+// =========================
+// CARREGAR TAREFAS
+// =========================
+
+async function loadTasks() {
+  const token = localStorage.getItem("access_token");
+
+  try {
+    const response = await fetch(`${API_URL}/tasks`, {
+      method: "GET",
+
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const tasks = await response.json();
+
+    console.log("Tarefas recebidas:", tasks);
+  } catch (error) {
+    console.error("Erro ao carregar tarefas:", error);
+  }
+}
+
+// =========================
 // LOGOUT
 // =========================
 
@@ -126,11 +225,8 @@ logoutButton.addEventListener("click", () => {
   taskFormContainer.classList.add("hidden");
   newTaskButton.classList.remove("hidden");
 
-  // Esconde o dashboard
-  dashboard.classList.add("hidden");
-
   // Mostra novamente o login
-  loginCard.classList.remove("hidden");
+  showLogin();
 
   // Limpa usuário e senha
   loginForm.reset();
