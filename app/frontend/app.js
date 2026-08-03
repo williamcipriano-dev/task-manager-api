@@ -10,6 +10,9 @@ const dashboard = document.getElementById("dashboard");
 const logoutButton = document.getElementById("logout-button");
 const currentUser = document.getElementById("current-user");
 
+// Modo de edição
+let editingTaskId = null;
+
 // Elementos do formulário de tarefas
 const newTaskButton = document.getElementById("new-task-button");
 const taskFormContainer = document.getElementById("task-form-container");
@@ -204,12 +207,140 @@ async function loadTasks() {
 
     const tasks = await response.json();
 
-    console.log("Tarefas recebidas:", tasks);
+    // Limpa a lista antes de recriar
+    tasksList.innerHTML = "";
+
+    // Não existe nenhuma tarefa
+    if (tasks.length === 0) {
+      emptyState.classList.remove("hidden");
+      return;
+    }
+
+    // Existem tarefas
+    emptyState.classList.add("hidden");
+
+    tasks.forEach((task) => {
+      const card = document.createElement("div");
+
+      card.className = "task-card";
+
+      card.innerHTML = `
+        <h3>${task.title}</h3>
+
+        <p class="task-description">
+          ${task.description || "Sem descrição."}
+        </p>
+
+        <div class="task-dates">
+
+          <span>
+            📅 <strong>Início:</strong>
+            ${task.start_date ?? "--"}
+          </span>
+
+          <span>
+            ⏰ <strong>Prazo:</strong>
+            ${task.due_date ?? "--"}
+          </span>
+
+        </div>
+
+        <div class="task-status">
+
+          ${
+            task.completed
+              ? `<span class="completed">✔ Concluída</span>`
+              : `<span class="pending">● Em andamento</span>`
+          }
+
+        </div>
+
+        <div class="task-actions">
+
+          <button
+            class="secondary-button edit-button"
+            data-id="${task.id}"
+          >
+            ✏ Editar
+          </button>
+
+          <button
+            class="secondary-button delete-button"
+            data-id="${task.id}"
+          >
+            🗑 Excluir
+          </button>
+
+        </div>
+      `;
+
+      const editButton = card.querySelector(".edit-button");
+      editButton.addEventListener("click", () => {
+        editingTaskId = task.id;
+
+        document.getElementById("task-title").value = task.title;
+
+        document.getElementById("task-description").value =
+          task.description || "";
+
+        document.getElementById("task-start-date").value =
+          task.start_date || "";
+
+        document.getElementById("task-due-date").value = task.due_date || "";
+
+        taskFormContainer.classList.remove("hidden");
+
+        newTaskButton.classList.add("hidden");
+
+        taskMessage.textContent = "";
+
+        document.getElementById("task-title").focus();
+      });
+
+      const deleteButton = card.querySelector(".delete-button");
+
+      deleteButton.addEventListener("click", () => {
+        deleteTask(task.id);
+      });
+
+      tasksList.appendChild(card);
+    });
   } catch (error) {
     console.error("Erro ao carregar tarefas:", error);
   }
 }
 
+// =========================
+// EXCLUIR TAREFA
+// =========================
+
+async function deleteTask(taskId) {
+  const token = localStorage.getItem("access_token");
+
+  if (!confirm("Deseja realmente excluir esta tarefa?")) {
+    return;
+  }
+
+  try {
+    const response = await fetch(`${API_URL}/tasks/${taskId}`, {
+      method: "DELETE",
+
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      alert("Erro ao excluir a tarefa.");
+      return;
+    }
+
+    // Atualiza a lista automaticamente
+    loadTasks();
+  } catch (error) {
+    console.error("Erro ao excluir tarefa:", error);
+  }
+}
 // =========================
 // LOGOUT
 // =========================
